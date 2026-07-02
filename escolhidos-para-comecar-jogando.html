@@ -13,6 +13,16 @@
   .ttl{ position:absolute; top:22px; left:26px; z-index:2; }
   .ttl h1{ color:var(--off); font-size:24px; }
   .ttl p{ color:var(--mint); font-size:12px; margin-top:3px; }
+  .crit-link{ display:inline-block; margin-top:8px; color:var(--mint); font-size:12px; text-decoration:underline; cursor:pointer; }
+  .crit{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.62); z-index:20; align-items:center; justify-content:center; padding:24px; }
+  .crit.open{ display:flex; }
+  .crit-card{ position:relative; background:var(--bg); border:1px solid rgba(39,229,191,.4); border-radius:16px; padding:30px 34px; max-width:600px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+  .crit-card h3{ color:var(--mint); font-size:19px; margin-bottom:14px; }
+  .crit-card ol{ margin:0 0 16px 18px; }
+  .crit-card li{ font-size:13px; line-height:1.5; margin-bottom:9px; }
+  .crit-card li b{ color:var(--mint); }
+  .crit-card .note{ font-size:12px; opacity:.85; line-height:1.55; border-top:1px solid rgba(39,229,191,.2); padding-top:12px; }
+  .crit-x{ position:absolute; top:12px; right:16px; color:var(--off); opacity:.7; font-size:24px; line-height:1; cursor:pointer; background:none; border:none; }
   .arrow{ position:absolute; top:30px; right:30px; color:var(--mint); font-size:14px; font-weight:700; z-index:2; }
 
   .spot{ position:absolute; transform:translate(-50%,-50%); z-index:1; }
@@ -52,7 +62,7 @@
     <line x1="40" y1="740" x2="1360" y2="740" stroke="#27E5BF" stroke-opacity="0.25" stroke-width="1"/>
   </svg>
 
-  <div class="ttl"><h1>Escolhidos para começar jogando</h1><p>mais votado por posição · desempate: menos posições ocupadas → votos gerais → mais tempo de casa</p></div>
+  <div class="ttl"><h1>Escolhidos para começar jogando</h1><p>mais votado por posição · desempate: menos posições ocupadas → votos gerais → mais tempo de casa</p><a class="crit-link" onclick="document.getElementById('crit').classList.add('open')">ⓘ Como os cracks foram escolhidos</a></div>
   <div class="arrow">ataque →</div>
 
   <div id="spots"></div>
@@ -113,6 +123,23 @@ SPOTS.forEach(([x,y,ab,desc,people]) => {
   root.appendChild(spot);
 });
 </script>
+<div class="crit" id="crit" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="crit-card">
+    <button class="crit-x" onclick="document.getElementById('crit').classList.remove('open')">×</button>
+    <h3>Como os cracks foram escolhidos</h3>
+    <ol>
+      <li><b>Mais votado na posição.</b> Em cada posição entram os nomes com mais votos ali.</li>
+      <li><b>Empatou? Quem ainda não foi escalado.</b> Quem já ficou como mais votado em outra posição libera a vaga.</li>
+      <li><b>Ainda empatado? Votos gerais.</b> A soma de votos recebidos em qualquer posição.</li>
+      <li><b>Persistiu? Mais tempo de casa.</b> Quem tem a admissão mais antiga leva a vaga.</li>
+    </ol>
+    <div class="note">
+      Foi assim que o <b>Victor</b> ficou na lateral (o mais antigo entre 6 empatados) e o
+      <b>Nery</b> no meio (mais tempo de casa que a Bruna). Maicon, Monique, Gabriele, Eduardo,
+      Patrícia e Leroi entraram direto, como os mais votados.
+    </div>
+  </div>
+</div>
 <img src="logo.svg" alt="L2" style="position:fixed;right:16px;bottom:14px;width:62px;opacity:.85;z-index:9">
 </body>
 </html>
