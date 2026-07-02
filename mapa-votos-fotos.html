@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Seleção L2 — Mapa de Votos (com fotos)</title>
+<style>
+  :root{ --bg:#171B21; --mint:#27E5BF; --off:#F2F3F4; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:#0e1116; font-family:ui-sans-serif,system-ui,-apple-system,sans-serif; }
+  .board{ width:1600px; margin:0 auto; background:var(--bg); border-radius:16px; padding:24px 20px 26px; }
+  h1{ color:var(--off); font-size:26px; }
+  .sub{ color:var(--mint); font-size:14px; margin-top:4px; }
+
+  .headrow{ display:flex; gap:6px; margin-top:20px; }
+  .hc{ flex:1; text-align:center; }
+  .hc .t{ color:var(--mint); font-weight:700; font-size:18px; }
+  .hc .d{ color:var(--off); opacity:.7; font-size:11px; margin-top:2px; min-height:26px; }
+
+  .pitch{ position:relative; }
+  .pitch > svg{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+  .cols{ position:relative; z-index:1; display:flex; gap:6px; align-items:stretch; min-height:700px; }
+  .col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+
+  .chip{ position:relative; display:flex; flex-direction:column; align-items:center; margin:7px 0; }
+  .ph{ position:relative; width:56px; height:56px; border-radius:50%; overflow:hidden;
+       border:2px solid var(--mint); background:#1f2630; }
+  .ph img{ width:100%; height:100%; object-fit:cover; display:block; position:relative; z-index:2; }
+  .ph .ini{ position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+            color:var(--mint); font-weight:700; font-size:17px; }
+  .badge{ position:absolute; top:-2px; right:calc(50% - 34px); z-index:3;
+          background:var(--mint); color:var(--bg); font-weight:700; font-size:12px;
+          width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+          border:2px solid var(--bg); }
+  .nm{ color:var(--off); font-size:12px; margin-top:5px; text-align:center; line-height:1.2; }
+
+  .tecbar{ margin-top:14px; border-top:1px solid rgba(39,229,191,.25); padding-top:16px;
+           display:flex; align-items:center; gap:28px; }
+  .teclabel{ min-width:200px; }
+  .teclabel .t{ color:var(--mint); font-weight:700; font-size:18px; }
+  .teclabel .d{ color:var(--off); opacity:.7; font-size:11px; margin-top:2px; }
+  .tecrow{ display:flex; gap:34px; }
+  .tecrow .chip{ margin:0; }
+</style>
+</head>
+<body>
+<div class="board">
+  <h1>Seleção L2 — Mapa de Votos</h1>
+  <div class="sub">cada foto = uma pessoa votada · número = votos naquela posição · ataque →</div>
+
+  <div class="headrow" id="headrow"></div>
+
+  <div class="pitch">
+    <svg viewBox="0 0 1560 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#27E5BF" stroke-opacity="0.13" stroke-width="2" fill="none">
+        <rect x="6" y="6" width="1548" height="688" rx="10"/>
+        <line x1="780" y1="6" x2="780" y2="694"/>
+        <circle cx="780" cy="350" r="76"/>
+        <rect x="6" y="240" width="150" height="220"/>
+        <rect x="1404" y="240" width="150" height="220"/>
+      </g>
+    </svg>
+    <div class="cols" id="cols"></div>
+  </div>
+
+  <div class="tecbar">
+    <div class="teclabel"><div class="t">TÉCNICO</div><div class="d">não joga: lê o jogo, define o esquema e lidera</div></div>
+    <div class="tecrow" id="tecrow"></div>
+  </div>
+</div>
+
+<script>
+const ID = {
+  maicon:'1HFNWjZjzakhwUVOyb8C6eXtg_iUR2ovy', valdenio:'1HX4bD-Q5D34_e-W6JOfQHAjTD6KniFDa',
+  monique:'1BOJMcoVhVj2E882JGSp0ikxggyAyHneq', gabriele:'1nUZtaKivIz7Qu8-k4NOx8vmxaZdxq376',
+  graziele:'1rwFlCjBrhiuhEees8L0hyuxYw468pbp5', manu:'1Iss5fai3hivnNPtu9yrcqhIvaQdzGzxL',
+  leticiaS:'1rByZuUUsFz-NAbQqIDanocCmX5ySkhXR', leticiaC:'12Qba4Y4fHL0teNF_4YGQiyYDW6qlo3_2',
+  victor:'1tCtRy5DTuwUN6CM2xWDUHkzVCiPNXnRl', richer:'1AO6e0e5WypsmBIDDulM1AvzVMhlP2eO9',
+  mari:'1uaCKxca88_6HpbS8j3eXT3QN0dID1CsX', rian:'1ZxdJp6XnZvIVMyQr-aJF_4j3ZM3m0uex',
+  ladeira:'1Js_6TE8H0OMHgBPDBJ2lFialDriS12Dl', vanessa:'1x2At7A4TPBlhw9mCUtn5WuOdWVml83Cg',
+  patricia:'1VDe8RYdbB7ptg5POcsOWXqXZpyZWQaZ1', alexandre:'1Oq4EBHfsbEqgUHcqv5e_RPW0iRlgm8pt',
+  flores:'13r58R0f6sWKXynzRKAgjSWHCiCQ9dO-B', claus:'1-O_yeujBRFG2re36lSZKE58s1WXv0V-e',
+  nery:'1JluHXenE6hl8RY4dk6g5IVRtuYS3R45L', bruna:'1UDT3UHFVA5JcT3cnhpnV0ppFiz4s0H4y',
+  curtinaz:'17LVhFjhHBTPMoOen901bNh7fbmgAjOMr', eduardo:'1PC8WO5yDjEbH-c5B7utK3i5OAE7QI3pn',
+  gus:'1cYB1MYqRHK7c6Z0Jk21Heyh-6uQ7FPWJ', leroi:'1x1gnrrl4IVtRj770ABS-tHY_J0DdT0Pe',
+  felipe:'1h4qj2dWPYs4IFlJSp2n75cTyYj9k2OYn', purcino:'17qDKguvK1UC9q9LA-iKwL5nElis-iety'
+};
+const img = id => id ? `https://drive.google.com/thumbnail?id=${id}&sz=w200` : null;
+
+// [nome, iniciais, chaveFoto, votos]
+const COLS = [
+  ['GOL','segura o caos', [['Maicon','MM','maicon',3],['Valdênio','VM','valdenio',1]]],
+  ['ZAG','antecipa o perigo', [['Monique','MB','monique',2],['Gabriele','GL','gabriele',2],['Graziele','GM','graziele',1],['Manu','MB','manu',1],['Letícia S.','LS','leticiaS',1],['Letícia C.','LC','leticiaC',1]]],
+  ['LAT','liga as pontas', [['Victor','VG','victor',1],['Richer','RM','richer',1],['Luiz Felipe','LF','felipe',1],['Mari','MA','mari',1],['Rian','RH','rian',1],['Ladeira','LL','ladeira',1],['Vanessa','VN','vanessa',1],['Patrícia','PB','patricia',1]]],
+  ['VOL','dá ritmo ao time', [['Letícia S.','LS','leticiaS',1],['Alexandre','AA','alexandre',1],['Manu','MB','manu',1],['Rodrigo Flores','RF','flores',1]]],
+  ['MEI','conexão e passe decisivo', [['Gabriele','GL','gabriele',1],['Claus','CT','claus',1],['Richer','RM','richer',1],['Nery','RN','nery',1],['Letícia S.','LS','leticiaS',1],['Bruna','BP','bruna',1],['Manu','MB','manu',1],['Curtinaz','LC','curtinaz',1]]],
+  ['PON','encara o 1×1', [['Eduardo','ES','eduardo',2],['Patrícia','PB','patricia',2],['Manu','MB','manu',1],['Gus','GS','gus',1],['Nery','RN','nery',1],['Valdênio','VM','valdenio',1]]],
+  ['CA','converte em resultado', [['Rodrigo Flores','RF','flores',1],['Rafael P.','RP','purcino',1],['Bruna','BP','bruna',1]]]
+];
+const TEC = [['Leroi','LO','leroi',2],['Valdênio','VM','valdenio',1],['Maicon','MM','maicon',1]];
+
+function chip([nome, ini, key, votos]){
+  const src = img(ID[key]);
+  const el = document.createElement('div');
+  el.className = 'chip';
+  el.innerHTML =
+    `<div class="ph"><span class="ini">${ini}</span>${src ? `<img src="${src}" alt="${nome}" onerror="this.remove()">` : ''}</div>
+     ${votos > 1 ? `<div class="badge">${votos}</div>` : ''}
+     <div class="nm">${nome}</div>`;
+  return el;
+}
+
+const headrow = document.getElementById('headrow');
+const cols = document.getElementById('cols');
+COLS.forEach(([head, desc, people]) => {
+  const hc = document.createElement('div');
+  hc.className = 'hc';
+  hc.innerHTML = `<div class="t">${head}</div><div class="d">${desc}</div>`;
+  headrow.appendChild(hc);
+
+  const col = document.createElement('div');
+  col.className = 'col';
+  people.forEach(p => col.appendChild(chip(p)));
+  cols.appendChild(col);
+});
+
+const tecrow = document.getElementById('tecrow');
+TEC.forEach(p => tecrow.appendChild(chip(p)));
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Seleção L2 — Time Titular (com fotos)</title>
+<style>
+  :root{ --bg:#171B21; --mint:#27E5BF; --off:#F2F3F4; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:#0e1116; font-family:ui-sans-serif,system-ui,-apple-system,sans-serif; }
+  .stage{ position:relative; width:1400px; height:840px; margin:0 auto; background:var(--bg); border-radius:16px; overflow:hidden; }
+  .stage > svg{ position:absolute; inset:0; z-index:0; }
+
+  .ttl{ position:absolute; top:22px; left:26px; z-index:2; }
+  .ttl h1{ color:var(--off); font-size:24px; }
+  .ttl p{ color:var(--mint); font-size:12px; margin-top:3px; }
+  .arrow{ position:absolute; top:30px; right:30px; color:var(--mint); font-size:14px; font-weight:700; z-index:2; }
+
+  .spot{ position:absolute; transform:translate(-50%,-50%); z-index:1; }
+  .lbl{ position:absolute; bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:5px; text-align:center; white-space:nowrap; }
+  .lbl .a{ color:var(--mint); font-size:12px; font-weight:700; }
+  .lbl .d{ color:var(--off); opacity:.7; font-size:10px; margin-top:1px; }
+  .grp{ display:flex; }
+  .ph{ width:50px; height:50px; border-radius:50%; overflow:hidden; border:2px solid var(--mint);
+       background:#1f2630; position:relative; }
+  .ph img{ width:100%; height:100%; object-fit:cover; display:block; position:relative; z-index:2; }
+  .ph .ini{ position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+            color:var(--mint); font-weight:700; font-size:15px; }
+  .grp.ovl .ph{ width:46px; height:46px; }
+  .grp.ovl .ph + .ph{ margin-left:-15px; }
+  .nm{ position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:5px;
+       color:var(--off); font-size:12px; text-align:center; white-space:nowrap; }
+  .nm.wrap{ white-space:normal; width:210px; font-size:11px; line-height:1.25; }
+
+  .tec{ position:absolute; left:40px; bottom:24px; z-index:2; display:flex; align-items:center; gap:12px; }
+  .tec .ph{ width:52px; height:52px; }
+  .tec .tl{ color:var(--mint); font-weight:700; font-size:15px; }
+  .tec .td{ color:var(--off); opacity:.7; font-size:11px; margin-top:2px; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <svg viewBox="0 0 1400 840" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#27E5BF" stroke-opacity="0.35" stroke-width="2" fill="none">
+      <rect x="40" y="80" width="1320" height="620" rx="8"/>
+      <line x1="700" y1="80" x2="700" y2="700"/>
+      <circle cx="700" cy="390" r="72"/>
+      <rect x="40" y="250" width="150" height="280"/>
+      <rect x="1210" y="250" width="150" height="280"/>
+    </g>
+    <rect x="31" y="330" width="9" height="120" fill="#27E5BF" fill-opacity="0.5"/>
+    <rect x="1360" y="330" width="9" height="120" fill="#27E5BF" fill-opacity="0.5"/>
+    <line x1="40" y1="740" x2="1360" y2="740" stroke="#27E5BF" stroke-opacity="0.25" stroke-width="1"/>
+  </svg>
+
+  <div class="ttl"><h1>Seleção L2 — Time Titular</h1><p>mais votado por posição · desempate: menos posições ocupadas → votos gerais · resta empate = sobreposto</p></div>
+  <div class="arrow">ataque →</div>
+
+  <div id="spots"></div>
+
+  <div class="tec">
+    <div class="ph"><span class="ini">LO</span><img src="" id="tecimg" alt="Leroi" onerror="this.remove()"></div>
+    <div><div class="tl">TÉCNICO — Leroi</div><div class="td">não joga: lê o jogo, define o esquema e lidera</div></div>
+  </div>
+</div>
+
+<script>
+const ID = {
+  maicon:'1HFNWjZjzakhwUVOyb8C6eXtg_iUR2ovy', monique:'1BOJMcoVhVj2E882JGSp0ikxggyAyHneq',
+  gabriele:'1nUZtaKivIz7Qu8-k4NOx8vmxaZdxq376', manu:'1Iss5fai3hivnNPtu9yrcqhIvaQdzGzxL',
+  leticiaS:'1rByZuUUsFz-NAbQqIDanocCmX5ySkhXR', victor:'1tCtRy5DTuwUN6CM2xWDUHkzVCiPNXnRl',
+  richer:'1AO6e0e5WypsmBIDDulM1AvzVMhlP2eO9', mari:'1uaCKxca88_6HpbS8j3eXT3QN0dID1CsX',
+  rian:'1ZxdJp6XnZvIVMyQr-aJF_4j3ZM3m0uex', ladeira:'1Js_6TE8H0OMHgBPDBJ2lFialDriS12Dl',
+  vanessa:'1x2At7A4TPBlhw9mCUtn5WuOdWVml83Cg', patricia:'1VDe8RYdbB7ptg5POcsOWXqXZpyZWQaZ1',
+  flores:'13r58R0f6sWKXynzRKAgjSWHCiCQ9dO-B', nery:'1JluHXenE6hl8RY4dk6g5IVRtuYS3R45L',
+  bruna:'1UDT3UHFVA5JcT3cnhpnV0ppFiz4s0H4y', eduardo:'1PC8WO5yDjEbH-c5B7utK3i5OAE7QI3pn',
+  leroi:'1x1gnrrl4IVtRj770ABS-tHY_J0DdT0Pe', felipe:'1h4qj2dWPYs4IFlJSp2n75cTyYj9k2OYn'
+};
+const img = id => id ? `https://drive.google.com/thumbnail?id=${id}&sz=w200` : null;
+const P = (nome, ini, key) => ({nome, ini, key});
+document.getElementById('tecimg').src = img(ID.leroi);
+
+// x, y, abrev, descrição, [pessoas]
+const SPOTS = [
+  [110,390,'GOL','segura o caos',[P('Maicon','MM','maicon')]],
+  [300,170,'LAT','liga as pontas',[P('Richer','RM','richer'),P('Luiz Felipe','LF','felipe'),P('Victor','VG','victor'),P('Mari','MA','mari')]],
+  [300,320,'ZAG','antecipa o perigo',[P('Monique','MB','monique')]],
+  [300,470,'ZAG','antecipa o perigo',[P('Gabriele','GL','gabriele')]],
+  [300,620,'LAT','liga as pontas',[P('Rian','RH','rian'),P('Ladeira','LL','ladeira'),P('Vanessa','VN','vanessa')]],
+  [560,390,'VOL','dá ritmo ao time',[P('Manu','MB','manu')]],
+  [690,250,'MEI','conexão e passe decisivo',[P('Letícia Sampaio','LS','leticiaS')]],
+  [690,540,'MEI','conexão e passe decisivo',[P('Nery','RN','nery'),P('Bruna','BP','bruna')]],
+  [1010,190,'PON','encara o 1×1',[P('Eduardo','ES','eduardo')]],
+  [1160,390,'CA','converte em resultado',[P('Rodrigo Flores','RF','flores')]],
+  [1010,600,'PON','encara o 1×1',[P('Patrícia','PB','patricia')]]
+];
+
+const root = document.getElementById('spots');
+SPOTS.forEach(([x,y,ab,desc,people]) => {
+  const ovl = people.length > 1;
+  const spot = document.createElement('div');
+  spot.className = 'spot';
+  spot.style.left = x + 'px';
+  spot.style.top = y + 'px';
+  const phs = people.map(p => {
+    const src = img(ID[p.key]);
+    return `<div class="ph"><span class="ini">${p.ini}</span>${src ? `<img src="${src}" alt="${p.nome}" onerror="this.remove()">` : ''}</div>`;
+  }).join('');
+  const nomes = people.map(p => p.nome).join(' · ');
+  spot.innerHTML =
+    `<div class="lbl"><div class="a">${ab}</div><div class="d">${desc}</div></div>
+     <div class="grp${ovl ? ' ovl' : ''}">${phs}</div>
+     <div class="nm${ovl ? ' wrap' : ''}">${nomes}</div>`;
+  root.appendChild(spot);
+});
+</script>
+</body>
+</html>
