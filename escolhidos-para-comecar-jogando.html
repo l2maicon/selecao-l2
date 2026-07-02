@@ -16,7 +16,9 @@
   .crit-link{ display:inline-block; margin-top:8px; color:var(--mint); font-size:12px; text-decoration:underline; cursor:pointer; }
   .crit{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.62); z-index:20; align-items:center; justify-content:center; padding:24px; }
   .crit.open{ display:flex; }
-  .crit-card{ position:relative; background:var(--bg); border:1px solid rgba(39,229,191,.4); border-radius:16px; padding:30px 34px; max-width:600px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+  .crit-card{ position:relative; background:var(--bg); color:var(--off); border:1px solid rgba(39,229,191,.4); border-radius:16px; padding:30px 34px; max-width:600px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+  .crit-card ol li::marker{ color:var(--mint); font-weight:700; }
+  .crit-map{ display:inline-block; margin-top:16px; color:var(--mint); font-size:13px; font-weight:600; text-decoration:underline; }
   .crit-card h3{ color:var(--mint); font-size:19px; margin-bottom:14px; }
   .crit-card ol{ margin:0 0 16px 18px; }
   .crit-card li{ font-size:13px; line-height:1.5; margin-bottom:9px; }
@@ -62,7 +64,7 @@
     <line x1="40" y1="740" x2="1360" y2="740" stroke="#27E5BF" stroke-opacity="0.25" stroke-width="1"/>
   </svg>
 
-  <div class="ttl"><h1>Escolhidos para começar jogando</h1><p>mais votado por posição · desempate: menos posições ocupadas → votos gerais → mais tempo de casa</p><a class="crit-link" onclick="document.getElementById('crit').classList.add('open')">ⓘ Como os cracks foram escolhidos</a></div>
+  <div class="ttl"><h1>Escolhidos para começar jogando</h1><a class="crit-link" onclick="document.getElementById('crit').classList.add('open')">ⓘ Como os cracks foram escolhidos</a></div>
   <div class="arrow">ataque →</div>
 
   <div id="spots"></div>
@@ -138,6 +140,7 @@ SPOTS.forEach(([x,y,ab,desc,people]) => {
       <b>Nery</b> no meio (mais tempo de casa que a Bruna). Maicon, Monique, Gabriele, Eduardo,
       Patrícia e Leroi entraram direto, como os mais votados.
     </div>
+    <a class="crit-map" href="mapa-votos-fotos.html">Veja todos que foram votados →</a>
   </div>
 </div>
 <img src="logo.svg" alt="L2" style="position:fixed;right:16px;bottom:14px;width:62px;opacity:.85;z-index:9">
