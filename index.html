@@ -12,6 +12,8 @@
   .wrap{ max-width:760px; width:100%; text-align:center; }
   h1{ font-size:30px; }
   .sub{ color:var(--mint); margin-top:8px; font-size:15px; }
+  .logo{ display:block; width:220px; margin:0 auto 24px; }
+  .corner{ position:fixed; right:22px; bottom:18px; width:76px; opacity:.85; }
   .cards{ display:flex; gap:20px; margin-top:40px; flex-wrap:wrap; justify-content:center; }
   a.card{ flex:1; min-width:260px; text-decoration:none; color:var(--off);
           background:var(--bg); border:1px solid rgba(39,229,191,.25); border-radius:16px;
@@ -25,6 +27,7 @@
 </head>
 <body>
   <div class="wrap">
+    <img class="logo" src="logo.svg" alt="L2">
     <h1>Seleção L2</h1>
     <div class="sub">Dinâmica do 1º Encontro de Lideranças — resultados</div>
     <div class="cards">
@@ -33,13 +36,14 @@
         <h2>Mapa de Votos</h2>
         <p>Todas as pessoas votadas em cada posição, com a contagem de votos.</p>
       </a>
-      <a class="card" href="selecao-titular-fotos.html">
+      <a class="card" href="escolhidos-para-comecar-jogando.html">
         <div class="ico">⚽</div>
-        <h2>Time Titular</h2>
-        <p>A escalação campeã — os mais votados por posição, no 4-3-3.</p>
+        <h2>Escolhidos para começar jogando</h2>
+        <p>A escalação — os mais votados por posição, no 4-3-3.</p>
       </a>
     </div>
     <div class="foot">L2 · gerado a partir da dinâmica de entrosamento</div>
   </div>
+  <img class="corner" src="logo.svg" alt="">
 </body>
 </html>
